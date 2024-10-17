@@ -5,3 +5,6 @@
 	path = contracts/lib/tnt-core
 	url = https://github.com/webb-tools/tnt-core
 	branch = main
+[submodule "contracts/lib/risc0-ethereum"]
+	path = contracts/lib/risc0-ethereum
+	url = https://github.com/risc0/risc0-ethereum
