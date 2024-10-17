@@ -1,0 +1,50 @@
+{
+  "metadata": {
+    "name": "zkvm-blueprint",
+    "description": "A bstarter blueprint utilizing ZKVM proving and verifying",
+    "author": "Justin Frevert <justinfrevert@gmail.com>",
+    "category": null,
+    "code_repository": "https://github.com/justinfrevert/zkvm-blueprint",
+    "logo": null,
+    "website": "https://github.com/justinfrevert/zkvm-blueprint",
+    "license": "Unlicense"
+  },
+  "jobs": [
+    {
+      "metadata": {
+        "name": "say_hello",
+        "description": "Returns \"Hello World!\" if `who` is `None`, otherwise returns \"Hello, <who>!\""
+      },
+      "params": [
+        {
+          "Optional": "String"
+        }
+      ],
+      "result": [
+        "String"
+      ],
+      "verifier": {
+        "Evm": "contracts/out/HelloBlueprint.sol/HelloBlueprint.json"
+      }
+    }
+  ],
+  "registration_hook": "None",
+  "registration_params": [],
+  "request_hook": "None",
+  "request_params": [],
+  "gadget": {
+    "Native": {
+      "sources": [
+        {
+          "fetcher": {
+            "Testing": {
+              "cargo_package": "zkvm-blueprint",
+              "cargo_bin": "main",
+              "base_path": "/home/justin/dev/zkvm-blueprint"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
