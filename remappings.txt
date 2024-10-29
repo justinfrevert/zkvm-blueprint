@@ -1,0 +1,5 @@
+forge-std/=lib/forge-std/src/
+tnt-core/=lib/tnt-core/src/
+zkvm/=src/
+risc0/=contracts/lib/risc0-ethereum/contracts/src
+

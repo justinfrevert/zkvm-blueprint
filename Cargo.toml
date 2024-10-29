@@ -1,0 +1,45 @@
+[package]
+name = "zkvm-blueprint"
+version = "0.1.0"
+edition = "2021"
+description = "A starter blueprint utilizing ZKVM proving and verifying"
+authors = ["Justin Frevert <justinfrevert@gmail.com>"]
+license = "Unlicense"
+homepage = "https://github.com/justinfrevert/zkvm-blueprint"
+repository = "https://github.com/justinfrevert/zkvm-blueprint"
+readme = "README.md"
+categories = ["cryptography", "cryptography::cryptocurrencies"]
+keywords = ["tangle", "blueprint", "avs"]
+rust-version = "1.81"
+
+[dependencies]
+tracing = "0.1"
+async-trait = "0.1"
+color-eyre = "0.6"
+structopt = "0.3.26"
+tokio = { version = "1.39", default-features = false, features = ["full"] }
+tracing-subscriber = { version = "0.3", features = ["parking_lot", "env-filter"] }
+log = "0.4.22"
+
+alloy-sol-types = { version = "0.7.7" }
+
+methods = { path = "./methods" }
+risc0-zkvm = { version = "1.0.5", features = ["prove"] }
+risc0-groth16 = { version = "1.0.5", features = ["prove"] }
+risc0-ethereum-contracts = { git = "https://github.com/risc0/risc0-ethereum.git", tag = "v1.1.2" }
+
+[dependencies.gadget-sdk]
+version = "0.1.1"
+default-features = false
+features = ["std", "getrandom"]
+
+[build-dependencies]
+blueprint-metadata = "0.1.2"
+
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+name = "zkvm-blueprint"
+path = "src/main.rs"
+
