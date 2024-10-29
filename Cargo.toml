@@ -29,7 +29,7 @@ risc0-groth16 = { version = "1.0.5", features = ["prove"] }
 risc0-ethereum-contracts = { git = "https://github.com/risc0/risc0-ethereum.git", tag = "v1.1.2" }
 
 [dependencies.gadget-sdk]
-version = "0.1.1"
+version = "0.2.0"
 default-features = false
 features = ["std", "getrandom"]
 
