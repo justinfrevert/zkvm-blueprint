@@ -6498,7 +6498,7 @@ checksum = "4e69bf016dc406eff7d53a7d3f7cf1c2e72c82b9088aac1118591e36dd2cd3e9"
 dependencies = [
  "bitcoin_hashes 0.13.0",
  "rand",
- "rand_core 0.6.4",
+ "rand_core 0.5.1",
  "serde",
  "unicode-normalization",
 ]
@@ -11801,7 +11801,7 @@ dependencies = [
 name = "zkvm-blueprint"
 version = "0.1.0"
 dependencies = [
- "alloy-sol-types 0.7.7",
+ "alloy-sol-types 0.8.8",
  "async-trait",
  "blueprint-metadata",
  "color-eyre",
