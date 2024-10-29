@@ -4,6 +4,13 @@
 
 ## 📚 Prerequisites
 
+
+curl -L https://risczero.com/install | bash
+
+Run rzup to install RISC Zero:
+
+rzup install
+
 Before you can run this project, you will need to have the following software installed on your machine:
 
 - [Rust](https://www.rust-lang.org/tools/install)
@@ -24,14 +31,6 @@ Or, if you prefer to install the CLI from crates.io:
 
 ```bash
 cargo install cargo-tangle --force # to get the latest version.
-```
-
-## 🚀 Getting Started
-
-Once `cargo-tangle` is installed, you can create a new project with the following command:
-
-```sh
-cargo tangle gadget create --name <project-name>
 ```
 
 and follow the instructions to create a new project.

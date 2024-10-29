@@ -6,10 +6,24 @@ import "risc0/groth16/Groth16Verifier.sol";
 import {IRiscZeroVerifier} from "risc0/IRiscZeroVerifier.sol";
 
 /**
- * @title HelloBlueprint
- * @dev This contract is an example of a service blueprint that provides a single service.
+ * @title ZkvmBlueprint
+ * @dev This contract is an example of a service blueprint that utilizes groth16 proof verification as part of its verification function
  */
-contract HelloBlueprint is BlueprintServiceManager {
+contract ZkvmBlueprint is BlueprintServiceManager {
+    constructor(IRiscZeroVerifier _verifier) {
+        verifier = _verifier;
+    }
+
+    /// @notice RISC Zero verifier contract address.
+    IRiscZeroVerifier public immutable verifier;
+
+    // The representation of the journal we'll keep on the contract side
+    struct Journal {
+        // Contents of the journal. In this case, that is just an aribtrary calculation result
+        uint256 result;
+    }
+
+
     /**
      * @dev Hook for service operator registration. Called when a service operator
      * attempts to register with the blueprint.
@@ -85,7 +99,9 @@ contract HelloBlueprint is BlueprintServiceManager {
         // Decode and validate the journal data 
         (bytes memory journalData, bytes memory seal, bytes32 imageId) = abi.decode(inputs, (bytes, bytes, bytes32));
 
-        Journal memory journal = abi.decode(journalData, (Journal));
+        // Optionally, retrieve the journal, if access to values committed to in the guest is required(for validation, etc.)
+        // Journal memory journal = abi.decode(journalData, (Journal));
+        
         bytes32 journalHash = sha256(inputs);
 
         // Verify the proof, reverting if invalid
