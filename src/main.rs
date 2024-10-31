@@ -1,11 +1,11 @@
 use color_eyre::Result;
 use gadget_sdk as sdk;
-use zkvm_blueprint as blueprint;
 use sdk::{
     config::ContextConfig, events_watcher::substrate::SubstrateEventWatcher,
     events_watcher::tangle::TangleEventsWatcher, tangle_subxt::*,
 };
 use structopt::StructOpt;
+use zkvm_blueprint as blueprint;
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -15,6 +15,7 @@ async fn main() -> Result<()> {
     // Initialize the environment
     let config = ContextConfig::from_args();
     let env = sdk::config::load(config)?;
+
     let signer = env.first_sr25519_signer()?;
     let client = subxt::OnlineClient::from_url(&env.rpc_endpoint).await?;
 

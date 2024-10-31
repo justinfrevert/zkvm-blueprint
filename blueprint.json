@@ -38,7 +38,7 @@
             "Testing": {
               "cargo_package": "zkvm-blueprint",
               "cargo_bin": "main",
-              "base_path": "/Users/justinfrevert/dev/zkvm-blueprint"
+              "base_path": "/home/justin/dev/zkvm-blueprint"
             }
           }
         }

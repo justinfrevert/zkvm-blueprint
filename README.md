@@ -3,14 +3,6 @@
 **A simple Hello World Blueprint for Tangle**
 
 ## 📚 Prerequisites
-
-
-curl -L https://risczero.com/install | bash
-
-Run rzup to install RISC Zero:
-
-rzup install
-
 Before you can run this project, you will need to have the following software installed on your machine:
 
 - [Rust](https://www.rust-lang.org/tools/install)
@@ -32,8 +24,22 @@ Or, if you prefer to install the CLI from crates.io:
 ```bash
 cargo install cargo-tangle --force # to get the latest version.
 ```
-
 and follow the instructions to create a new project.
+
+
+#### RISC Zero dependencies
+This project relies on RISC Zero for proving rust program execution. The rzup toolchain is required.
+
+```shell
+curl -L https://risczero.com/install | bash
+
+Run rzup to install RISC Zero:
+
+rzup install
+```
+
+#### Tangle Node
+To build and run the Tangle node, clone the [github repository](https://github.com/tangle-network/tangle), and follow the readme instructions.
 
 ## 🛠️ Development
 
@@ -41,6 +47,7 @@ Once you have created a new project, you can run the following command to start 
 
 ```sh
 cargo build
+forge build
 ```
 to build the project, and
 
@@ -54,11 +61,33 @@ to deploy the blueprint to the Tangle network.
 
 ## 📚 Overview
 
-This project is about creating a simple Hello World Blueprint for Tangle and EigenLayer. Blueprints are specifications for Actively Validated Services (AVS) on the Tangle Network. An AVS is an off-chain service that runs arbitrary computations for a user-specified period of time.
+TBD
 
-Blueprints provide a useful abstraction, allowing developers to create reusable service infrastructures as if they were smart contracts. This enables developers to monetize their work and align long-term incentives with the success of their creations, benefiting proportionally to their Blueprint's usage.
+## 🚄 Quick Start
+These steps walk you through running the Tangle node, starting a local zkvm gadget which listens for onchain events, and deploying a service and executing the job. The gadget responds to the event by generating a proof and submitting it to the onchain verifer contract, which verifies the proof.
 
-For more details, please refer to the [project documentation](https://docs.tangle.tools/developers/blueprints).
+### Start Tangle Node
+In Tangle Project:
+```shell
+./scripts/run-standalone-local.sh --clean
+```
+
+### Start Gadget
+Note the log target, which allows you to check the progress of the proof generation and submission
+```shell
+# Prepare the well-known "Alice" key for use by inserting into the keystore
+cargo tangle blueprint keygen --key-type sr25519 --path ./keystore/ --seed e5be9a5092b81bca64be81d212e7f2f9eba183bb7a90954f7b76361f6edb5c0a
+RUST_LOG=gadget=info RUST_BACKTRACE=1 RPC_URL=ws://localhost:9944 BLUEPRINT_ID=0 cargo r -p zkvm-blueprint run --bind-addr=127.0.0.1 --bind-port 9944 --blueprint-id 0 --url ws://localhost:9944 --service-id=0 --keystore-uri file://./keystore --protocol tangle
+```
+
+### Deploy Contracts and Create a Test Job
+```shell
+nvm use
+yarn
+yarn tsx deploy.ts 
+```
+
+
 
 ## 📬 Feedback
 
