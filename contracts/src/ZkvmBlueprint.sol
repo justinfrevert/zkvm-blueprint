@@ -73,7 +73,16 @@ contract ZkvmBlueprint is BlueprintServiceManager {
         bytes calldata _inputs,
         bytes calldata _outputs
     ) public virtual override onlyFromRootChain {
-        // Do something with the job call result
+        // Decode and validate the journal data 
+        (bytes memory journalData, bytes memory seal, bytes32 imageId) = abi.decode(_inputs, (bytes, bytes, bytes32));
+
+        // Optionally, retrieve the journal, if access to values committed to in the guest is required(for validation, etc.)
+        // Journal memory journal = abi.decode(journalData, (Journal));
+        
+        bytes32 journalHash = sha256(_inputs);
+
+        // Verify the proof, reverting if invalid
+        verifier.verify(seal, imageId, journalHash);
     }
 
     /**
@@ -96,18 +105,6 @@ contract ZkvmBlueprint is BlueprintServiceManager {
         bytes calldata inputs,
         bytes calldata outputs
     ) public view virtual override onlyFromRootChain returns (bool) {
-        // Decode and validate the journal data 
-        (bytes memory journalData, bytes memory seal, bytes32 imageId) = abi.decode(inputs, (bytes, bytes, bytes32));
-
-        // Optionally, retrieve the journal, if access to values committed to in the guest is required(for validation, etc.)
-        // Journal memory journal = abi.decode(journalData, (Journal));
-        
-        bytes32 journalHash = sha256(inputs);
-
-        // Verify the proof, reverting if invalid
-        verifier.verify(seal, imageId, journalHash);
-
-        return true;
     }
 
     /**
