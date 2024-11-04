@@ -4,6 +4,7 @@ pragma solidity >=0.8.13;
 import "core/BlueprintServiceManager.sol";
 import "risc0/groth16/Groth16Verifier.sol";
 import {IRiscZeroVerifier} from "risc0/IRiscZeroVerifier.sol";
+import {ImageID} from "./ImageID.sol";
 
 /**
  * @title ZkvmBlueprint
@@ -13,6 +14,8 @@ contract ZkvmBlueprint is BlueprintServiceManager {
     constructor(IRiscZeroVerifier _verifier) {
         verifier = _verifier;
     }
+
+    bytes32 public constant imageId = ImageID.PROGRAM_GUEST_ID;
 
     /// @notice RISC Zero verifier contract address.
     IRiscZeroVerifier public immutable verifier;
@@ -74,7 +77,7 @@ contract ZkvmBlueprint is BlueprintServiceManager {
         bytes calldata _outputs
     ) public virtual override onlyFromRootChain {
         // Decode and validate the journal data 
-        (bytes memory journalData, bytes memory seal, bytes32 imageId) = abi.decode(_inputs, (bytes, bytes, bytes32));
+        (bytes memory journalData, bytes memory seal) = abi.decode(_inputs, (bytes, bytes));
 
         // Optionally, retrieve the journal, if access to values committed to in the guest is required(for validation, etc.)
         // Journal memory journal = abi.decode(journalData, (Journal));

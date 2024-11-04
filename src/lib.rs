@@ -2,18 +2,17 @@ use gadget_sdk as sdk;
 use sdk::job;
 use std::convert::Infallible;
 
-use methods::{EXAMPLE_GUEST_ELF, EXAMPLE_GUEST_ID};
+use methods::PROGRAM_GUEST_ELF;
 use risc0_ethereum_contracts::groth16::encode;
 
 use alloy_sol_types::{sol, SolValue};
-use risc0_zkvm::{compute_image_id, default_prover, sha::Digest, ExecutorEnv, ProverOpts};
+use risc0_zkvm::{compute_image_id, default_prover, ExecutorEnv, ProverOpts};
 
 // Ethereum types for job
 sol! {
     struct JobInputs {
         bytes journalData;
         bytes seal;
-        bytes32 imageId;
     }
 }
 
@@ -31,7 +30,7 @@ pub fn xsquare(x: u64) -> Result<Vec<u8>, Infallible> {
     // TODO: Get logger working
     log::info!(target: "gadget", "Proving job");
     // Proof information by proving the specified ELF binary.
-    let prove_info: risc0_zkvm::ProveInfo = prover.prove(env, EXAMPLE_GUEST_ELF).unwrap();
+    let prove_info: risc0_zkvm::ProveInfo = prover.prove(env, PROGRAM_GUEST_ELF).unwrap();
     log::info!(target: "gadget", "Proof generation successful, now compressing into Groth16 proof...");
 
     let receipt = prove_info.receipt;
@@ -40,9 +39,7 @@ pub fn xsquare(x: u64) -> Result<Vec<u8>, Infallible> {
 
     log::info!(target: "gadget", "Compressed proof to Groth16.");
 
-    let image_id = compute_image_id(EXAMPLE_GUEST_ELF).unwrap();
-    let image_id_digest = Digest::from(EXAMPLE_GUEST_ID);
-    let image_id_bytes: [u8; 32] = image_id_digest.try_into().expect("Image id is 32 bytes");
+    let image_id = compute_image_id(PROGRAM_GUEST_ELF).unwrap();
 
     compressed.verify(image_id).unwrap();
     log::info!(target: "gadget", "Groth16 proof verified.");
@@ -53,7 +50,6 @@ pub fn xsquare(x: u64) -> Result<Vec<u8>, Infallible> {
     let job_inputs = JobInputs {
         journalData: journal.into(),
         seal: seal.into(),
-        imageId: image_id_bytes.into(),
     };
 
     // ABI encode the struct
