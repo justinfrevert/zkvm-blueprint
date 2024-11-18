@@ -2151,14 +2151,15 @@ dependencies = [
 
 [[package]]
 name = "blueprint-metadata"
-version = "0.1.2"
+version = "0.1.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8645b3de2f017bf86cbd7fb572eb0f6a3b8ac7eb3ae8b902d2449262f792cde5"
+checksum = "0fdf5db63e122f8393d9cfbbd636cff2ba3aed0141cc8f832bd1a0191830ec92"
 dependencies = [
  "cargo_metadata",
  "fs2",
- "gadget-blueprint-proc-macro-core",
+ "gadget-blueprint-proc-macro-core 0.2.0",
  "rustdoc-types",
+ "serde",
  "serde_json",
  "typed-builder",
 ]
@@ -3941,7 +3942,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "219c35f8b869bd4fe1a97737fe1ca327984da0b48c634feabd6f3be7f4b63c5a"
 dependencies = [
  "alloy-contract 0.2.1",
- "gadget-blueprint-proc-macro-core",
+ "gadget-blueprint-proc-macro-core 0.1.2",
  "proc-macro2",
  "quote",
  "serde_json",
@@ -3953,6 +3954,17 @@ name = "gadget-blueprint-proc-macro-core"
 version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4f17b261e51ac9907ced6bc6c05334b3c202e73bcb974da2e692f4aa8e872d2e"
+dependencies = [
+ "cid",
+ "ethereum-types",
+ "serde",
+]
+
+[[package]]
+name = "gadget-blueprint-proc-macro-core"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "926d5a5d8c7706be67b50fee8e57d9e9a9c8e4b5430e6ed464c9943128b006bc"
 dependencies = [
  "cid",
  "ethereum-types",
@@ -6501,7 +6513,7 @@ checksum = "4e69bf016dc406eff7d53a7d3f7cf1c2e72c82b9088aac1118591e36dd2cd3e9"
 dependencies = [
  "bitcoin_hashes 0.13.0",
  "rand",
- "rand_core 0.5.1",
+ "rand_core 0.6.4",
  "serde",
  "unicode-normalization",
 ]
@@ -7028,7 +7040,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e9552f850d5f0964a4e4d0bf306459ac29323ddfbae05e35a7c0d35cb0803cc5"
 dependencies = [
  "anyhow",
- "itertools 0.11.0",
+ "itertools 0.13.0",
  "proc-macro2",
  "quote",
  "syn 2.0.79",
@@ -7890,9 +7902,9 @@ dependencies = [
 
 [[package]]
 name = "rustdoc-types"
-version = "0.30.0"
+version = "0.31.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "89e3124c5a7883153fe3e762da9998cf36c302dbf1cc237869d297f9713e5655"
+checksum = "d368a6e25f5445187e8f67a7ec1cdf38f6d361fb26f9476b8b5f0bd91d88fd60"
 dependencies = [
  "serde",
 ]
